@@ -12,7 +12,8 @@
 #define ALIVE_VISUAL "[#]"
 #define DEAD_VISUAL "   "
 
-#define ALIVE_SELECTED_VISUAL "{#}"
+#define ALIVE_SELECTED_VISUAL "[#]"
+#define AlIVE_UNSELECTED_VISUAL " # "
 #define DEAD_SELECTED_VISUAL "[_]"
 #define DEAD_UNSELECTED_VISUAL " _ "
 
@@ -69,108 +70,101 @@ int main() {
 	}
 
 
-//   display_map(map);
-//   while (update_map(map)) {
-
-//     Sleep(1000);
-//     display_map(map);
-//   }
-
 return 0;
 }
 
 
 void initialise_map(int map[ROWS][COLUMNS]) {
 
-for (int r = 0; r < ROWS; r++) {
-	for (int c = 0; c < COLUMNS; c++) {
-	map[r][c] = 0;
+	for (int r = 0; r < ROWS; r++) {
+		for (int c = 0; c < COLUMNS; c++) {
+			map[r][c] = 0;
+		}
 	}
-}
 }
 
 int check_alive(int map[ROWS][COLUMNS], int r, int c) {
-if (r < 0 || c < 0 || r > ROWS - 1 || c > COLUMNS - 1) {
+	if (r < 0 || c < 0 || r > ROWS - 1 || c > COLUMNS - 1) {
+		return 0;
+	}
+
+	if (map[r][c] == 1) {
+		return 1;
+	}
+
 	return 0;
-}
-
-if (map[r][c] == 1) {
-	return 1;
-}
-
-return 0;
 }
 
 int update_map(int map[ROWS][COLUMNS]) {
 
-int running = 0;
-int same = 1;
+	int running = 0;
+	int same = 1;
 
-int next[ROWS][COLUMNS];
+	int next[ROWS][COLUMNS];
 
-for (int r = 0; r < ROWS; r++) {
-	for (int c = 0; c < COLUMNS; c++) {
+	for (int r = 0; r < ROWS; r++) {
+		for (int c = 0; c < COLUMNS; c++) {
 
-	// Counting the amount of alive neighbouring cells
+			// Counting the amount of alive neighbouring cells
 
-	int neighbours =
-		check_alive(map, r - 1, c - 1) + 
-		check_alive(map, r - 1, c + 0) +
-		check_alive(map, r - 1, c + 1) +
+			int neighbours =
+				check_alive(map, r - 1, c - 1) + 
+				check_alive(map, r - 1, c + 0) +
+				check_alive(map, r - 1, c + 1) +
 
-		check_alive(map, r + 0, c - 1) + 
-		check_alive(map, r + 0, c + 1) +
+				check_alive(map, r + 0, c - 1) + 
+				check_alive(map, r + 0, c + 1) +
 
-		check_alive(map, r + 1, c - 1) + 
-		check_alive(map, r + 1, c + 0) +
-		check_alive(map, r + 1, c + 1);
+				check_alive(map, r + 1, c - 1) + 
+				check_alive(map, r + 1, c + 0) +
+				check_alive(map, r + 1, c + 1);
 
-	// If there is still activity, running is true
-	if (neighbours) {
-		running = 1;
-	}
+			// If there is still activity, running is true
+			if (neighbours) {
+				running = 1;
+			}
 
-	next[r][c] = 0;
+			next[r][c] = 0;
 
-	if (neighbours == 3) {
-		next[r][c] = 1;
-	}
+			if (neighbours == 3) {
+				next[r][c] = 1;
+			}
 
-	if (neighbours == 2 && map[r][c] == 1) {
-		next[r][c] = 1;
-	}
-	}
-}
-
-// update all values in map to the values in the next arr
-for (int r = 0; r < ROWS; r++) {
-	for (int c = 0; c < COLUMNS; c++) {
-
-		if (map[r][c] != next[r][c]) {
-			same = 0;
+			if (neighbours == 2 && map[r][c] == 1) {
+				next[r][c] = 1;
+			}
 		}
-		map[r][c] = next[r][c];
 	}
-}
 
-// return the running status
-return running && !same;
+	// update all values in map to the values in the next arr
+	for (int r = 0; r < ROWS; r++) {
+		for (int c = 0; c < COLUMNS; c++) {
+
+			if (map[r][c] != next[r][c]) {
+				same = 0;
+			}
+			map[r][c] = next[r][c];
+		}
+	}
+
+	// return the running status
+	return running && !same;
 }
 
 void switch_state(int map[ROWS][COLUMNS], int r, int c) {
-if (r < 0 || c < 0 || r > ROWS - 1 || c > COLUMNS - 1) {
-	return;
-}
+	if (r < 0 || c < 0 || r > ROWS - 1 || c > COLUMNS - 1) {
+		return;
+	}
 
-if (map[r][c] == 0) {
-	map[r][c] = 1;
-} else {
-	map[r][c] = 0;
-}
+	if (map[r][c] == 0) {
+		map[r][c] = 1;
+	} else {
+		map[r][c] = 0;
+	}
 }
 
 void display_map(int map[ROWS][COLUMNS]) {
-system("cls");
+	system("cls");
 
 	for (int i = 0; i < (COLUMNS*VISUAL_LEN)+2; i++) {
 		printf("=");
@@ -210,7 +204,7 @@ void display_map_cursor(int map[ROWS][COLUMNS], int cursor_r, int cursor_c) {
 				}
 			} else {
 				if (map[r][c] == 1) {
-					printf(ALIVE_VISUAL);
+					printf(AlIVE_UNSELECTED_VISUAL);
 				} else {
 					printf(DEAD_UNSELECTED_VISUAL);
 				}
