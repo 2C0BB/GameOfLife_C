@@ -13,7 +13,7 @@
 #define DEAD_VISUAL "   "
 
 #define ALIVE_SELECTED_VISUAL "[#]"
-#define AlIVE_UNSELECTED_VISUAL " # "
+#define ALIVE_UNSELECTED_VISUAL " # "
 #define DEAD_SELECTED_VISUAL "[_]"
 #define DEAD_UNSELECTED_VISUAL " _ "
 
@@ -201,7 +201,7 @@ void display_map_cursor(int map[ROWS][COLUMNS], int cursor_r, int cursor_c) {
 				}
 			} else {
 				if (map[r][c] == 1) {
-					printf(AlIVE_UNSELECTED_VISUAL);
+					printf(ALIVE_UNSELECTED_VISUAL);
 				} else {
 					printf(DEAD_UNSELECTED_VISUAL);
 				}
