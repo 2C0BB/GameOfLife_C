@@ -88,11 +88,8 @@ int check_alive(int map[ROWS][COLUMNS], int r, int c) {
 		return 0;
 	}
 
-	if (map[r][c] == 1) {
-		return 1;
-	}
 
-	return 0;
+	return map[r][c];
 }
 
 int update_map(int map[ROWS][COLUMNS]) {
