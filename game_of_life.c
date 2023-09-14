@@ -27,6 +27,7 @@ void display_map(int map[ROWS][COLUMNS]);
 void display_map_cursor(int map[ROWS][COLUMNS], int cursor_r, int cursor_c);
 
 void run_editor(int map[ROWS][COLUMNS]);
+void run_map_runner(int map[ROWS][COLUMNS]);
 int main() {
 
 	int map[ROWS][COLUMNS];
@@ -54,18 +55,7 @@ int main() {
 			run_editor(map);
 		}			
 		if (option == 'r') {
-			int iterations;
-			printf("iterations\n> ");
-			scanf(" %d", &iterations);
-
-			display_map(map);
-			int i = 0;
-			while (update_map(map) && i < iterations) {
-
-				Sleep(100);
-				display_map(map);
-				i++;
-			}
+			run_map_runner(map);
 		}
 	}
 
@@ -258,5 +248,20 @@ void run_editor(int map[ROWS][COLUMNS]){
 		if (cursor_c >= COLUMNS) {
 			cursor_c = COLUMNS-1;
 		}
+	}
+}
+
+void run_map_runner(int map[ROWS][COLUMNS]){
+	int iterations;
+	printf("iterations\n> ");
+	scanf(" %d", &iterations);
+
+	display_map(map);
+	int i = 0;
+	while (update_map(map) && i < iterations) {
+
+		Sleep(100);
+		display_map(map);
+		i++;
 	}
 }
