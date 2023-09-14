@@ -9,10 +9,10 @@
 
 #define VISUAL_LEN 3
 
-#define ALIVE_VISUAL " # "
+#define ALIVE_VISUAL "[#]"
 #define DEAD_VISUAL "   "
 
-#define ALIVE_SELECTED_VISUAL "[#]"
+#define ALIVE_SELECTED_VISUAL "{#}"
 #define DEAD_SELECTED_VISUAL "[_]"
 #define DEAD_UNSELECTED_VISUAL " _ "
 
