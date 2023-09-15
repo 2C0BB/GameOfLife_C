@@ -64,6 +64,9 @@ return 0;
 }
 
 
+
+
+
 void initialise_map(int map[ROWS][COLUMNS]) {
 
 	for (int r = 0; r < ROWS; r++) {
